@@ -30,17 +30,31 @@
 \usepackage{xecyr}
 \usepackage{hyperref}
 \usepackage{amsthm}
+\usepackage{blindtext}
 
 \usepackage{polyglossia}
 \setdefaultlanguage{russian}
 \setmainfont[Mapping=tex-text]{CMU Serif}
 \setsansfont[Mapping=tex-text]{CMU Sans Serif}
 \setmonofont[Mapping=tex-text]{CMU Serif}
+
+\makeatletter
+\DeclareUrlCommand\ULurl@@{%
+  \def\UrlFont{\ttfamily\color{blue}}%
+  \def\UrlLeft{\uline\bgroup}%
+  \def\UrlRight{\egroup}}
+\def\ULurl@#1{\hyper@linkurl{\ULurl@@{#1}}{#1}}
+\DeclareRobustCommand*\ULurl{\hyper@normalise\ULurl@}
+\makeatother
+
+\newcommand\TODO[1]{\textcolor{red}{{\Large TODO: #1}}}
 %-------------------------------------------------------------------------------
 %	TITLE PAGE
 %-------------------------------------------------------------------------------
 \title[Controllable text generation]{Controllable text generation with small data using auxiliary in-domain enrichment}
-\author{Беляев Станислав}
+\author[Беляев Станислав]{
+Беляев Станислав\texorpdfstring{\\ Научный руководитель: Брыксин Тимофей}{}
+}
 \institute[СПбАУ]
 {
 Санкт-Петербургский Академический Университет \\
@@ -48,7 +62,6 @@
 \textit{stasbelyaev96@gmail.com}
 }
 \date{23 марта 2018}
-
 \begin{document}
 %-------------------------------------------------------------------------------
 %	PRESENTATION SLIDES
@@ -77,7 +90,7 @@
 
 Машины НЕ умеют:
 \begin{enumerate}
-    \item \underline{Хорошо} подражать высшей нервной деятельности
+    \item \textbf{Хорошо} подражать высшей нервной деятельности
     \item Понимать и обощать сложные категории
     \begin{itemize}
         \item Этика (юмор, мораль, норма, ...)
@@ -171,7 +184,7 @@
 
 \vskip4mm
 
-\underline{Решение}: Искать похожие $X_{aux} \sim X$ in-domain данные из смежных областей.
+\underline{Решение}: Искать похожие $X_{\texttt{aux}} \sim X$ in-domain данные из смежных областей.
 
 \end{frame}
 %-------------------------------------------------------------------------------
@@ -247,34 +260,110 @@
 \frametitle{Данные}
 \framesubtitle{Источники}
 
-Разберемся, откуда брать данные...
+\begin{columns}[T]
+    \begin{column}[T]{0.33\textwidth}
+        \begin{center}
+            Условия задачек \\
+            \begin{columns}
+                \begin{column}{0.35\textwidth}
+                    \begin{center}
+                        \includegraphics[width=\textwidth]{images/stepik.png}
+                    \end{center}
+                \end{column}
+                \begin{column}{0.65\textwidth}
+                    \begin{center}
+                        \includegraphics[width=\textwidth]{images/codeforces.png} \\
+                        \includegraphics[width=\textwidth]{images/hackerank.png}
+                    \end{center}
+                \end{column}
+            \end{columns}
+            \begin{itemize}
+                \item $|X_1 \in X| = 5\texttt{k}$
+                \item Тэги ($f$) уже проставлены
+                \item Собран вручную, но будет готовый
+            \end{itemize}
+        \end{center}
+    \end{column}
+    \vline
+    \begin{column}[T]{0.33\textwidth}
+        \begin{center}
+            Stackoverflow \\
+            \includegraphics[width=0.7\textwidth]{images/stackoverflow.png} \\
+            \begin{itemize}
+                \item Берем вопросы с тэгом \textit{python}
+                \item $|X_2 \in X_{aux}| = 600\texttt{k}$
+                \item Тэги уже проставлены
+                \item Предобработка
+            \end{itemize}
+        \end{center}
+    \end{column}
+    \vline
+    \begin{column}[T]{0.33\textwidth}
+        \begin{center}
+            Docstring \\
+            \vskip3mm
+            \includegraphics[width=0.9\textwidth]{images/docstring.png} \\
+            \vskip3mm
+            \includegraphics[width=0.9\textwidth]{images/docstring2.png} \\
+            \begin{itemize}
+                \item $|X_3 \in X_{aux}| = 150\texttt{k}$
+                \item Тэги = Entities
+                \item Предобработка
+            \end{itemize}
+        \end{center}
+    \end{column}
+\end{columns}
+
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}
+\frametitle{Данные}
+\framesubtitle{Stackoverflow}
+
+\TODO{Написать}
+
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}
+\frametitle{Данные}
+\framesubtitle{Docstring}
+
+\TODO{Написать}
+
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}
+\frametitle{Данные}
+\framesubtitle{Итого}
+
+\TODO{Написать}
 
 \end{frame}
 %-------------------------------------------------------------------------------
 \section{RNN}
 \begin{frame}
 \frametitle{RNN}
-\framesubtitle{Обзор}
+\framesubtitle{Обзор и применение}
 
-RNN
+\TODO{Написать}
 
 \end{frame}
 %-------------------------------------------------------------------------------
 \section{VAE}
 \begin{frame}
 \frametitle{VAE}
-\framesubtitle{Обзор}
+\framesubtitle{Обзор и применение}
 
-VAE
+\TODO{Написать}
 
 \end{frame}
 %-------------------------------------------------------------------------------
 \section{GAN}
 \begin{frame}
 \frametitle{GAN}
-\framesubtitle{Обзор}
+\framesubtitle{Обзор и применение}
 
-GAN
+\TODO{Написать...}
 
 \end{frame}
 %-------------------------------------------------------------------------------
@@ -283,20 +372,55 @@ GAN
 \frametitle{Оценивание}
 \framesubtitle{Метрики}
 
-Perplexity и смотреть глазками \\
+Как можно оценить результат генерации?
+\begin{itemize}
+    \item Perplexity
+    \item Assessors evaluation
+        \begin{itemize}
+            \item MTurk
+            \item Я.Толока
+        \end{itemize}
+    \item Самому
+\end{itemize}
 
-\begin{table}
-\begin{tabular}{l l l}
-\toprule
-\textbf{Treatments} & \textbf{Response 1} & \textbf{Response 2}\\
-\midrule
-Treatment 1 & 0.0003262 & 0.562 \\
-Treatment 2 & 0.0015681 & 0.910 \\
-Treatment 3 & 0.0009271 & 0.296 \\
-\bottomrule
-\end{tabular}
-\caption{Table caption}
-\end{table}
+% Perplexity и смотреть глазками \\
+
+% \begin{table}
+% \begin{tabular}{l l l}
+% \toprule
+% \textbf{Treatments} & \textbf{Response 1} & \textbf{Response 2}\\
+% \midrule
+% Treatment 1 & 0.0003262 & 0.562 \\
+% Treatment 2 & 0.0015681 & 0.910 \\
+% Treatment 3 & 0.0009271 & 0.296 \\
+% \bottomrule
+% \end{tabular}
+% \caption{Table caption}
+% \end{table}
+
+\end{frame}
+%-------------------------------------------------------------------------------
+\section{Оценивание}
+\begin{frame}
+\frametitle{Оценивание}
+\framesubtitle{Perplexity}
+
+$X_{\texttt{train}}, X_{\texttt{test}}$ - разбили датасет $X_{\texttt{data}} \subset X \cup X_{\texttt{aux}}$. \\
+Есть языковая модель $M$, обученная на $X_{\texttt{train}}$. Как оценить эффективность? Посчитаем вероятность предложений $W \in X_{\texttt{test}}$.
+
+\begin{block}{Perplexity}
+    $PP(W) = P(w_1w_2w_3\dots w_{|W|})^{-\frac{1}{|W|}}$
+\end{block}
+
+\begin{block}{Chain rule}
+    $PP(W) = \left[\prod\limits_{i=1}^{|W|}{\frac{1}{P(w_i|w_1\dots w_{i-1})}}\right]^{\frac{1}{|W|}}$
+\end{block}
+
+\begin{itemize}
+    \item Нижний терм в произведении $\Leftrightarrow$ очередной шаг алгоритма
+    \item Чем меньше perplexity, тем больше $P(W)$, т.е. тем лучше.
+    \item Отдельно посчитаем для $X_{\texttt{test}} \cap X$ (это - реальная метрика)
+\end{itemize}
 
 \end{frame}
 %-------------------------------------------------------------------------------
@@ -305,24 +429,45 @@ Treatment 3 & 0.0009271 & 0.296 \\
 \frametitle{Выводы}
 \framesubtitle{Результаты}
 
-То то и то то
+\TODO{Это получилось, а это не получилось}
+
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}
+\frametitle{Выводы}
+\framesubtitle{Будущая работа}
+
+\TODO{Дальше я буду делать то то и то то}
 
 \end{frame}
 %-------------------------------------------------------------------------------
 \section{Ссылки}
 \begin{frame}
 \frametitle{Ссылки}
-\framesubtitle{Статьи}
+\framesubtitle{Статьи, код и контакты}
 
-То то и то то \\
-
-\footnotesize{
-\begin{thebibliography}{99}
-\bibitem[Smith, 2012]{p1} John Smith (2012)
-\newblock Title of the publication
-\newblock \emph{Journal Name} 12(3), 45 -- 678.
-\end{thebibliography}
-}
+\begin{enumerate}
+    \item \begin{thebibliography}{99}
+            \bibitem[Barone, 2017]{p1} Antonio Valerio Miceli Barone (2017)
+            \newblock \href{https://arxiv.org/abs/1707.02275v1}{A parallel corpus of Python functions and documentation strings for automated code documentation and code generation}
+        \end{thebibliography}
+    \item Karpathy, Andrej (2015). \href{http://karpathy.github.io/2015/05/21/rnn-effectiveness/}{“The Unreasonable Effectiveness of Recurrent Neural Networks”.}
+    \item \begin{thebibliography}{99}
+            \bibitem[Bowman, 2016]{p1} Samuel R. Bowman (2016)
+            \newblock \href{https://arxiv.org/abs/1511.06349}{Generating Sentences from a Continuous Space}
+        \end{thebibliography}
+    \item \begin{thebibliography}{99}
+            \bibitem[Hu, 2018]{p1} Zhiting Hu (2018)
+            \newblock \href{https://arxiv.org/abs/1703.00955}{Toward Controlled Generation of Text}
+        \end{thebibliography}
+    \item \begin{thebibliography}{99}
+            \bibitem[Wang, 2017]{p1} Heng Wang (2017)
+            \newblock \href{https://arxiv.org/abs/1712.00170}{Text Generation Based on Generative Adversarial Nets with Latent Variable}
+        \end{thebibliography}
+    \item \ULurl{https://github.com/stasbel/task-gen} (Генерация)
+    \item \ULurl{https://github.com/stasbel/bachelor-thesis} (Презентация)
+    \item \ULurl{https://t.me/stasbel}
+\end{enumerate}
 
 \end{frame}
 %-------------------------------------------------------------------------------
