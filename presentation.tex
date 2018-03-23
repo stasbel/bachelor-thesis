@@ -48,6 +48,7 @@
 \makeatother
 
 \newcommand\TODO[1]{\textcolor{red}{{\Large TODO: #1}}}
+\newcommand\NaN{\textcolor{red}{NaN}}
 %-------------------------------------------------------------------------------
 %	TITLE PAGE
 %-------------------------------------------------------------------------------
@@ -188,6 +189,94 @@
 
 \end{frame}
 %-------------------------------------------------------------------------------
+\section{Данные}
+\begin{frame}
+\frametitle{Данные}
+\framesubtitle{Условия задачек}
+
+\TODO{Написать}
+
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}
+\frametitle{Данные}
+\framesubtitle{Stackoverflow}
+
+\TODO{Написать}
+
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}
+\frametitle{Данные}
+\framesubtitle{Docstring}
+
+\TODO{Написать}
+
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}
+\frametitle{Данные}
+\framesubtitle{Итого}
+
+$$X_{\texttt{data}} = X_1 \cup X_2 \cup X_3$$
+
+\begin{columns}[T]
+    \begin{column}[T]{0.33\textwidth}
+        \begin{center}
+            Условия задачек \\
+            \begin{columns}
+                \begin{column}{0.35\textwidth}
+                    \begin{center}
+                        \includegraphics[width=\textwidth]{images/stepik.png}
+                    \end{center}
+                \end{column}
+                \begin{column}{0.65\textwidth}
+                    \begin{center}
+                        \includegraphics[width=\textwidth]{images/codeforces.png} \\
+                        \includegraphics[width=\textwidth]{images/hackerank.png}
+                    \end{center}
+                \end{column}
+            \end{columns}
+            \begin{itemize}
+                \item $|X_1 \in X| = 5\texttt{k}$
+                \item Тэги ($f$) уже проставлены
+                \item Собран вручную, но будет готовый
+            \end{itemize}
+        \end{center}
+    \end{column}
+    \vline
+    \begin{column}[T]{0.33\textwidth}
+        \begin{center}
+            Stackoverflow \\
+            \includegraphics[width=0.4\textwidth]{images/stackoverflow.png} \\
+            \begin{itemize}
+                \item Берем вопросы с тэгом \textit{python}
+                \item $|X_2 \in X_{aux}| = 600\texttt{k}$
+                \item Тэги уже проставлены
+                \item Предобработка
+            \end{itemize}
+        \end{center}
+    \end{column}
+    \vline
+    \begin{column}[T]{0.33\textwidth}
+        \begin{center}
+            Docstring \\
+            \vskip3mm
+            \includegraphics[width=0.9\textwidth]{images/docstring.png} \\
+            \vskip3mm
+            \includegraphics[width=0.9\textwidth]{images/docstring2.png} \\
+            \begin{itemize}
+                \item $|X_3 \in X_{aux}| = 150\texttt{k}$
+                \item Тэги = Entities
+                \item Предобработка
+            \end{itemize}
+        \end{center}
+    \end{column}
+\end{columns}
+
+\end{frame}
+%-------------------------------------------------------------------------------
+\section{Генерация}
 \begin{frame}
 \frametitle{Введение}
 \framesubtitle{Изображения vs текст}
@@ -255,91 +344,6 @@
 
 \end{frame}
 %-------------------------------------------------------------------------------
-\section{Данные}
-\begin{frame}
-\frametitle{Данные}
-\framesubtitle{Источники}
-
-\begin{columns}[T]
-    \begin{column}[T]{0.33\textwidth}
-        \begin{center}
-            Условия задачек \\
-            \begin{columns}
-                \begin{column}{0.35\textwidth}
-                    \begin{center}
-                        \includegraphics[width=\textwidth]{images/stepik.png}
-                    \end{center}
-                \end{column}
-                \begin{column}{0.65\textwidth}
-                    \begin{center}
-                        \includegraphics[width=\textwidth]{images/codeforces.png} \\
-                        \includegraphics[width=\textwidth]{images/hackerank.png}
-                    \end{center}
-                \end{column}
-            \end{columns}
-            \begin{itemize}
-                \item $|X_1 \in X| = 5\texttt{k}$
-                \item Тэги ($f$) уже проставлены
-                \item Собран вручную, но будет готовый
-            \end{itemize}
-        \end{center}
-    \end{column}
-    \vline
-    \begin{column}[T]{0.33\textwidth}
-        \begin{center}
-            Stackoverflow \\
-            \includegraphics[width=0.7\textwidth]{images/stackoverflow.png} \\
-            \begin{itemize}
-                \item Берем вопросы с тэгом \textit{python}
-                \item $|X_2 \in X_{aux}| = 600\texttt{k}$
-                \item Тэги уже проставлены
-                \item Предобработка
-            \end{itemize}
-        \end{center}
-    \end{column}
-    \vline
-    \begin{column}[T]{0.33\textwidth}
-        \begin{center}
-            Docstring \\
-            \vskip3mm
-            \includegraphics[width=0.9\textwidth]{images/docstring.png} \\
-            \vskip3mm
-            \includegraphics[width=0.9\textwidth]{images/docstring2.png} \\
-            \begin{itemize}
-                \item $|X_3 \in X_{aux}| = 150\texttt{k}$
-                \item Тэги = Entities
-                \item Предобработка
-            \end{itemize}
-        \end{center}
-    \end{column}
-\end{columns}
-
-\end{frame}
-%-------------------------------------------------------------------------------
-\begin{frame}
-\frametitle{Данные}
-\framesubtitle{Stackoverflow}
-
-\TODO{Написать}
-
-\end{frame}
-%-------------------------------------------------------------------------------
-\begin{frame}
-\frametitle{Данные}
-\framesubtitle{Docstring}
-
-\TODO{Написать}
-
-\end{frame}
-%-------------------------------------------------------------------------------
-\begin{frame}
-\frametitle{Данные}
-\framesubtitle{Итого}
-
-\TODO{Написать}
-
-\end{frame}
-%-------------------------------------------------------------------------------
 \section{RNN}
 \begin{frame}
 \frametitle{RNN}
@@ -363,7 +367,7 @@
 \frametitle{GAN}
 \framesubtitle{Обзор и применение}
 
-\TODO{Написать...}
+\TODO{Написать}
 
 \end{frame}
 %-------------------------------------------------------------------------------
@@ -372,38 +376,26 @@
 \frametitle{Оценивание}
 \framesubtitle{Метрики}
 
-Как можно оценить результат генерации?
+Как можно оценить результат генерации? (Salimans et al., 16)
 \begin{itemize}
     \item Perplexity
     \item Assessors evaluation
         \begin{itemize}
-            \item MTurk
-            \item Я.Толока
+            \item MTurk, Я.Толока
+            \item DCG, MAP
         \end{itemize}
     \item Самому
+        \begin{itemize}
+            \item Generic-генерация
+            \item Генерация по заданным темам
+        \end{itemize}
 \end{itemize}
-
-% Perplexity и смотреть глазками \\
-
-% \begin{table}
-% \begin{tabular}{l l l}
-% \toprule
-% \textbf{Treatments} & \textbf{Response 1} & \textbf{Response 2}\\
-% \midrule
-% Treatment 1 & 0.0003262 & 0.562 \\
-% Treatment 2 & 0.0015681 & 0.910 \\
-% Treatment 3 & 0.0009271 & 0.296 \\
-% \bottomrule
-% \end{tabular}
-% \caption{Table caption}
-% \end{table}
 
 \end{frame}
 %-------------------------------------------------------------------------------
-\section{Оценивание}
 \begin{frame}
 \frametitle{Оценивание}
-\framesubtitle{Perplexity}
+\framesubtitle{Определение perplexity}
 
 $X_{\texttt{train}}, X_{\texttt{test}}$ - разбили датасет $X_{\texttt{data}} \subset X \cup X_{\texttt{aux}}$. \\
 Есть языковая модель $M$, обученная на $X_{\texttt{train}}$. Как оценить эффективность? Посчитаем вероятность предложений $W \in X_{\texttt{test}}$.
@@ -418,9 +410,43 @@ $X_{\texttt{train}}, X_{\texttt{test}}$ - разбили датасет $X_{\tex
 
 \begin{itemize}
     \item Нижний терм в произведении $\Leftrightarrow$ очередной шаг алгоритма
-    \item Чем меньше perplexity, тем больше $P(W)$, т.е. тем лучше.
-    \item Отдельно посчитаем для $X_{\texttt{test}} \cap X$ (это - реальная метрика)
+    \item Чем меньше perplexity, тем больше $P(W)$, т.е. тем лучше
+    \item Отдельно посчитаем для $X_{\texttt{test}} \cap X$ (это - реально важная метрика)
 \end{itemize}
+
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}
+\frametitle{Оценивание}
+\framesubtitle{Таблица perplexity}
+
+\begin{table}
+\begin{tabular}{l | l l l l}
+\toprule
+\textbf{Test} & \textbf{RNN} & \textbf{VAE} & \textbf{CVAE} & \textbf{GAN} \\
+\midrule
+PTB & 38.93 & \NaN & \NaN & 39.12 \\
+CMC & 29.10 & \NaN & \NaN & 29.09 \\
+\midrule
+$X_{\texttt{test}}$ & 30.29 & \NaN & \NaN & \NaN \\
+$X_{\texttt{test}} \cap X$ & 40.10 & \NaN & \NaN & \NaN \\
+\bottomrule
+\end{tabular}
+\caption{Perplexity}
+\end{table}
+
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}
+\frametitle{Оценивание}
+\framesubtitle{Примеры}
+
+\begin{center}
+    RNN (~20 эпох) \\
+    \includegraphics[width=0.8\textwidth]{images/example.png}
+\end{center}
+
+% \TODO{Добавить больше}
 
 \end{frame}
 %-------------------------------------------------------------------------------
@@ -429,7 +455,21 @@ $X_{\texttt{train}}, X_{\texttt{test}}$ - разбили датасет $X_{\tex
 \frametitle{Выводы}
 \framesubtitle{Результаты}
 
-\TODO{Это получилось, а это не получилось}
+\begin{itemize}
+    \item Анализ state-of-the-art методов генерации текста
+        \begin{itemize}
+            \item Модификации для наших данных
+            \item Сравнение подходов
+        \end{itemize}
+    \item Анализ влияние данных на генерацию
+    \begin{itemize}
+        \item Какого влияние $X_{\texttt{aux}}$ на генерацию?
+        \item Как соотносятся $X$ и $X_{\texttt{aux}}$ в терминах латентных представлений?
+    \end{itemize}
+    \item Метрики и эмпирические проверки, позволяющие оценить сложность задачи
+\end{itemize}
+
+% \TODO{Добавить еще}
 
 \end{frame}
 %-------------------------------------------------------------------------------
@@ -437,7 +477,23 @@ $X_{\texttt{train}}, X_{\texttt{test}}$ - разбили датасет $X_{\tex
 \frametitle{Выводы}
 \framesubtitle{Будущая работа}
 
-\TODO{Дальше я буду делать то то и то то}
+\begin{itemize}
+    \item Попытаться проинтерпретировать важной свойств
+    \begin{itemize}
+        \item Seed для $RNN$
+        \item Латентное подпростванство для $X_{\texttt{test}} \cap X$ из $VAE$
+    \end{itemize}
+    \item Больше данных $\Rightarrow$ выделить паттерн для генерации?
+    \item Попробовать GAN'ы
+        \begin{itemize}
+            \item WC-GAN
+            \item SeqGAN
+            \item GumbelSoftmax
+        \end{itemize}
+    \item Генерировать код по условию задачи
+\end{itemize}
+
+% \TODO{Добавить еще}
 
 \end{frame}
 %-------------------------------------------------------------------------------
