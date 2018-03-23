@@ -49,6 +49,11 @@
 
 \newcommand\TODO[1]{\textcolor{red}{{\Large TODO: #1}}}
 \newcommand\NaN{\textcolor{red}{NaN}}
+\newcommand{\X}[1]{X_{\texttt{#1}}}
+\newcommand{\Xaux}{\X{aux}}
+\newcommand{\Xdata}{\X{data}}
+\newcommand{\Xtrain}{\X{train}}
+\newcommand{\Xtest}{\X{test}}
 %-------------------------------------------------------------------------------
 %	TITLE PAGE
 %-------------------------------------------------------------------------------
@@ -194,7 +199,42 @@
 \frametitle{Данные}
 \framesubtitle{Условия задачек}
 
-\TODO{Написать}
+\begin{columns}
+    \begin{column}{0.5\textwidth}
+        \begin{itemize}
+            \item Разный контекст, форма, требования и сложность
+            \begin{itemize}
+                \item Сложно выделить шаблон
+            \end{itemize}
+            \item Собран вручную ($\sim 100$)
+            \item Запрос в Stepik
+            \begin{itemize}
+                \item На английском
+                \item С тегами и темами
+            \end{itemize}
+            \item Расширяемо за счет кравлеров по codeforces и hackerank
+        \end{itemize}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+        \begin{columns}
+            \begin{column}{0.35\textwidth}
+                \begin{center}
+                    \includegraphics[width=\textwidth]{images/stepik.png}
+                \end{center}
+            \end{column}
+            \begin{column}{0.65\textwidth}
+                \begin{center}
+                    \includegraphics[width=\textwidth]{images/codeforces.png} \\
+                    \includegraphics[width=\textwidth]{images/hackerank.png}
+                \end{center}
+            \end{column}
+        \end{columns}
+    \end{column}
+\end{columns}
+
+\vskip3mm
+
+\includegraphics[width=\textwidth]{images/stepik_example.png}
 
 \end{frame}
 %-------------------------------------------------------------------------------
@@ -202,7 +242,33 @@
 \frametitle{Данные}
 \framesubtitle{Stackoverflow}
 
-\TODO{Написать}
+\begin{columns}
+    \begin{column}{0.65\textwidth}
+        \begin{itemize}
+            \item Есть готовый за 2008-2016
+            \item 2016-2018 получаем с открытого api
+            \item Хотя бы с одним тэгом \textit{python}
+            \begin{itemize}
+                \item Остальные тэги уже проставлены
+            \end{itemize}
+            \item Замена нод с кодом на $CODE$
+            \begin{itemize}
+                \item Не портим словарь
+                \item Не ищем/учитываем лишние ненужные зависимости
+            \end{itemize}
+            \item $\Xaux$, но слова и выражения используются в правильном значении
+        \end{itemize}
+    \end{column}
+    \begin{column}{0.35\textwidth}
+        \begin{center}
+            \includegraphics[width=0.4\textwidth]{images/stackoverflow.png}
+        \end{center}
+    \end{column}
+\end{columns}
+
+\vskip3mm
+
+\includegraphics[width=\textwidth]{images/stackoverflow_example.png}
 
 \end{frame}
 %-------------------------------------------------------------------------------
@@ -210,7 +276,42 @@
 \frametitle{Данные}
 \framesubtitle{Docstring}
 
-\TODO{Написать}
+\begin{columns}[T]
+    \begin{column}[T]{0.5\textwidth}
+        \begin{itemize}
+            \item Кравлер по гитхабу, \textit{python} код
+            \item ASCII text без вставок кода + ограничения по длинне
+            \item Похожий на английский
+            \begin{itemize}
+                \item Готовая языковая модель
+            \end{itemize}
+            \item Тэги
+            \begin{itemize}
+                \item Entities
+                \item Связки сущ. + прилаг.
+                \item Top1000
+            \end{itemize}
+            \item $\Xaux$, но слова и выражения используются в правильном значении
+        \end{itemize}
+    \end{column}
+    \begin{column}[T]{0.5\textwidth}
+        \vskip-5mm
+        \begin{center}
+            Пример
+            \includegraphics[width=1\textwidth]{images/docstring2.png} \\
+            Entities
+            \includegraphics[width=1\textwidth]{images/entities.png} \\
+            Дерево разбора
+            \includegraphics[width=1\textwidth]{images/syntax_tree.png} \\
+            Тэги
+            \includegraphics[width=1\textwidth]{images/ecnts.png} \\
+        \end{center}
+    \end{column}
+\end{columns}
+
+\vskip3mm
+
+\includegraphics[width=\textwidth]{images/docstring_example.png}
 
 \end{frame}
 %-------------------------------------------------------------------------------
@@ -347,9 +448,73 @@ $$X_{\texttt{data}} = X_1 \cup X_2 \cup X_3$$
 \section{RNN}
 \begin{frame}
 \frametitle{RNN}
-\framesubtitle{Обзор и применение}
+\framesubtitle{Обзор}
 
-\TODO{Написать}
+\begin{center}
+    \includegraphics[width=0.65\textwidth]{images/rnn.png}
+\end{center}
+
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}
+\frametitle{RNN}
+\framesubtitle{Beam search}
+
+\begin{center}
+    $n = 3$ \\
+    \includegraphics[width=0.95\textwidth]{images/beam_search.jpeg}
+\end{center}
+
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}
+\frametitle{RNN}
+\framesubtitle{Seed}
+
+Как задать $RNN$ начальные условия для генерации?
+\begin{itemize}
+    \item Out-of-band (Chen et al., 2015; Lipton et al., 2015):
+    \begin{itemize}
+        \item Конкатенация с векторным представлением начальных условий
+        \item На каждом шаге/один раз в начале
+        \item One-hot/LDA topic modeling/doc2vec
+    \end{itemize}
+    \item In-band
+    \begin{itemize}
+        \item Префикс
+        \item Префис + суффикс
+        $$\texttt{text} \Rightarrow \texttt{tags} + | + \texttt{text} + | + \texttt{tags}$$
+        \item Начинаем генерировать с нужного префикса
+        \item Отрезаем суффикс
+    \end{itemize}
+\end{itemize}
+
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}
+\frametitle{RNN}
+\framesubtitle{Реализация}
+
+Модель:
+\begin{itemize}
+    \item MultiLayerLSTM, 2 слоя
+    \item WordRNN/CharRNN/BPERNN
+    \item Dropout=0.5 на первом слое
+    \item 100 эпох
+    \item Out-of-band/In-band
+\end{itemize}
+
+\vskip3mm
+
+Результаты:
+\begin{itemize}
+    \item Долго сходится и плохо интерпретируется
+    \item Правдоподобная генерация, но в качестве Seed не получится передать близость к $X$
+    \begin{itemize}
+        \item Out-of-band учится отделять $X$ от $\Xaux$
+        \item In-band путается
+    \end{itemize}
+\end{itemize}
 
 \end{frame}
 %-------------------------------------------------------------------------------
@@ -358,7 +523,9 @@ $$X_{\texttt{data}} = X_1 \cup X_2 \cup X_3$$
 \frametitle{VAE}
 \framesubtitle{Обзор и применение}
 
-\TODO{Написать}
+\begin{center}
+    \includegraphics[width=0.65\textwidth]{images/vae.png}
+\end{center}
 
 \end{frame}
 %-------------------------------------------------------------------------------
@@ -463,8 +630,8 @@ $X_{\texttt{test}} \cap X$ & 40.10 & \NaN & \NaN & \NaN \\
         \end{itemize}
     \item Анализ влияние данных на генерацию
     \begin{itemize}
-        \item Какого влияние $X_{\texttt{aux}}$ на генерацию?
-        \item Как соотносятся $X$ и $X_{\texttt{aux}}$ в терминах латентных представлений?
+        \item Каково влияние $\Xaux$ на генерацию?
+        \item Как соотносятся $X$ и $\Xaux$ в терминах латентных представлений?
     \end{itemize}
     \item Метрики и эмпирические проверки, позволяющие оценить сложность задачи
 \end{itemize}
@@ -481,16 +648,20 @@ $X_{\texttt{test}} \cap X$ & 40.10 & \NaN & \NaN & \NaN \\
     \item Попытаться проинтерпретировать важной свойств
     \begin{itemize}
         \item Seed для $RNN$
-        \item Латентное подпростванство для $X_{\texttt{test}} \cap X$ из $VAE$
+        \item Латентное подпространство для $\Xtest \cap X$ из $VAE$
     \end{itemize}
     \item Больше данных $\Rightarrow$ выделить паттерн для генерации?
+    \item Оптимизация скорости для тестирования:
+    \begin{itemize}
+        \item RNN $\Rightarrow$ CNN
+    \end{itemize}
     \item Попробовать GAN'ы
         \begin{itemize}
             \item WC-GAN
             \item SeqGAN
             \item GumbelSoftmax
         \end{itemize}
-    \item Генерировать код по условию задачи
+    \item Генерировать код решения по условию задачи
 \end{itemize}
 
 % \TODO{Добавить еще}
