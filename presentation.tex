@@ -57,9 +57,10 @@
 %-------------------------------------------------------------------------------
 %	TITLE PAGE
 %-------------------------------------------------------------------------------
-\title[Controllable text generation]{Controllable text generation with small data using auxiliary in-domain enrichment}
+\title[Управляемая генерация текста]{Управляемая генерация текста%Controllable text generation with small data using auxiliary in-domain enrichment
+}
 \author[Беляев Станислав]{
-Беляев Станислав\texorpdfstring{\\ Научный руководитель: Брыксин Тимофей}{}
+Беляев Станислав%\texorpdfstring{\\ Научный руководитель: Брыксин Тимофей}{}
 }
 \institute[СПбАУ]
 {
@@ -174,7 +175,7 @@
 
 \begin{columns}
     \begin{column}{0.5\textwidth}
-        Но что делать, есть данных мало?
+        Но что делать, если данных мало?
         \begin{itemize}
             \item Мы не сможем обобщать 
             \item Мы скорее всего переобучимся
@@ -521,11 +522,183 @@ $$X_{\texttt{data}} = X_1 \cup X_2 \cup X_3$$
 \section{VAE}
 \begin{frame}
 \frametitle{VAE}
-\framesubtitle{Обзор и применение}
+\framesubtitle{Автоэнкодер}
 
 \begin{center}
-    \includegraphics[width=0.65\textwidth]{images/vae.png}
+    \includegraphics[width=0.15\textwidth]{images/ae_term.png} \\
+    \vskip-5mm \\
+    \includegraphics[width=0.65\textwidth]{images/ae.png}
 \end{center}
+
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}
+\frametitle{VAE}
+\framesubtitle{Латентное пространство AE}
+
+\begin{center}
+    $$|h| = 1$$
+    $g$ и $f$ афинные преобразования (линейное со сдвигом)
+    \includegraphics[width=0.55\textwidth]{images/ae_lin.png}
+\end{center}
+
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}
+\frametitle{VAE}
+\framesubtitle{Вариационный Автоэнкодер}
+
+\begin{center}
+    \includegraphics[width=0.45\textwidth]{images/vae_terms.png}
+\end{center}
+
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}
+\frametitle{VAE}
+\framesubtitle{TextVAE}
+
+(Bowman et al., 2016)
+
+\begin{center}
+    \includegraphics[width=0.75\textwidth]{images/text_vae.png}
+\end{center}
+
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}
+\frametitle{VAE}
+\framesubtitle{Проблемы TextVAE}
+
+Проблемы и решения:
+\begin{itemize}
+    \item Decoder начинает учиться быстрее encoder'a, не учитывая ошибку с KL
+    \begin{itemize}
+        \item Дадим терму с KL переменный вес $w$
+        \item Начнем с $w = 0$ и будем постепенно увеличивать
+        \item \includegraphics[width=0.5\textwidth]{images/kl_term_w.png}
+    \end{itemize}
+    \item Обычный dropout не работает
+    \begin{itemize}
+        \item Делаем WordDropout
+        \item При работе encoder'a случайно заменяем последнее слово на <UNK>
+    \end{itemize}
+\end{itemize}
+
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}
+\frametitle{VAE}
+\framesubtitle{Особенности TextVAE}
+
+Путь между точками в латентном пространстве:
+\begin{columns}[T]
+    \begin{column}[T]{0.5\textwidth}
+        \begin{center}
+            AE \\
+            \includegraphics[width=1\textwidth]{images/ae_path.png}
+        \end{center}
+    \end{column}
+    \begin{column}[T]{0.5\textwidth}
+        \begin{center}
+            VAE \\
+            \includegraphics[width=1\textwidth]{images/vae_path.png}
+        \end{center}
+    \end{column}
+\end{columns}
+
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}
+\frametitle{VAE}
+\framesubtitle{Идея с сэмплированием VAE}
+
+Идея:
+\begin{itemize}
+    \item Давайте обучим TextVAE на $\Xdata$
+    \item Поэкперементируем с весом ошибки на $X_1 \subset \Xdata$
+    \item Данных много $\Rightarrow$ хороший decoder
+    \item Управляемая генерация
+    \begin{itemize}
+        \item Если хотим что-то рядом с $X_1$, будем сэплировать латентный вектор из распределения для латентных векторов $X_1$
+        \item KL терм заставляет это распределение стремиться к непрерывному (гауссову)
+    \end{itemize}
+\end{itemize}
+
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}
+\frametitle{VAE}
+\framesubtitle{ConditionalVAE}
+
+\begin{center}
+    \includegraphics[width=0.5\textwidth]{images/cvae.png}
+\end{center}
+
+Та же идея для текста (Hu et al., 2018)
+
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}
+\frametitle{VAE}
+\framesubtitle{Проблема ConditionalVAE}
+
+\includegraphics[width=1\textwidth]{images/cvae_problem1.png}
+
+\begin{columns}
+    \begin{column}{0.5\textwidth}
+        \begin{center}
+            \includegraphics[width=1\textwidth]{images/cvae_problem2.png}
+        \end{center}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+        \begin{center}
+            \includegraphics[width=1\textwidth]{images/cvae_problem3.png}
+        \end{center}
+    \end{column}
+\end{columns}
+
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}
+\frametitle{VAE}
+\framesubtitle{Проблема ConditionalVAE #2}
+
+\begin{columns}
+    \begin{column}{0.5\textwidth}
+        \begin{center}
+            VAE \\
+            \includegraphics[width=1\textwidth]{images/cvae_problem2.png}
+        \end{center}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+        \begin{center}
+            CVAE \\
+            \includegraphics[width=1\textwidth]{images/cvae_problem3.png}
+        \end{center}
+    \end{column}
+\end{columns}
+
+CVAE делает латентное пространство разрывным, игнорируя ошибку с KL термом
+
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}
+\frametitle{VAE}
+\framesubtitle{Идея TextCVAE}
+
+Идея:
+\begin{itemize}
+    \item Давайте обучим TextCVAE на $\Xdata$
+    \item Поэкперементируем с весом ошибки на $X_1 \subset \Xdata$
+    \item Данных много $\Rightarrow$ хороший decoder
+    \item Управляемая генерация
+    \begin{itemize}
+        \item Ставим нужную метку
+        \item Будут проблемы с тем, что encoder научит отделять $X_1$ и не $X_1$
+        \item Будем учить $X_1$ с случайными метками
+    \end{itemize}
+\end{itemize}
 
 \end{frame}
 %-------------------------------------------------------------------------------
