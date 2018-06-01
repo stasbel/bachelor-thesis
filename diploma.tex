@@ -1,0 +1,87 @@
+\documentclass{spbau-diploma}
+
+\begin{document}
+
+\filltitle{ru}{
+    chair              = {Кафедра математических и информационных технологий},
+    title              = {Управляемая генерация текста},
+    type               = {bachelor},
+    position           = {студента},
+    group              = 402,
+    author             = {Беляев Станислав Валерьевич},
+    supervisorPosition = {к.\,ф.-м.\,н., исследователь},
+    supervisor         = {Николенко С.\,И.},
+    reviewerPosition   = {к.\,ф.-м.\,н., исследователь},
+    reviewer           = {Шпильман А.\,А.},
+    chairHeadPosition  = {д.\,ф.-м.\,н., профессор},
+    chairHead          = {Омельченко А.\,В.},
+}
+
+\filltitle{en}{
+    chair              = {Department of Mathematics and Information Technology},
+    title              = {Controllable text generation},
+    author             = {Edelweis Mashkin},
+    supervisorPosition = {researcher},
+    supervisor         = {Sergey Nikolenko},
+    reviewerPosition   = {researcher},
+    reviewer           = {Alexey Shpilman},
+    chairHeadPosition  = {professor},
+    chairHead          = {Alexander Omelchenko},
+}
+
+\maketitle
+\tableofcontents
+
+\section*{Введение}
+В данной работе проанализированные подходы к генерации дискретных значений с
+помощью подходов из глубокого обучения.
+
+\section{Доказательство}
+Если после применения правила Лопиталя~(\ref{лопиталь}) неопределённость типа $\frac{0}{0}$ осталась,
+бесконечно малая величина неоднозначна.
+\begin{equation}
+\label{лопиталь}
+\lim_{x\to a}\frac{f(x)}{g(x)} = \lim_{x\to a} \frac{f'(x)}{g'(x)}
+\end{equation}
+
+Определитель системы линейных уравнений~(\ref{система}),
+в первом приближении, реально допускает интеграл от функции, имеющий конечный разрыв,
+явно демонстрируя всю чушь вышесказанного. Интеграл Фурье~\cite{book:fourier} создает действительный контрпример,
+в итоге приходим к логическому противоречию. К тому же разрыв функции неоднозначен.
+Разрыв функции (рис.~\ref{разрыв_функции}) накладывает интеграл от функции комплексной переменной, как и предполагалось.
+
+
+\begin{equation}
+\label{система}
+\begin{array}{rl}
+5x + 3y & = 0\\
+-x + 5y & = 10
+\end{array}
+\end{equation}
+
+% Рисунок, размещенный с предпочтением "вверху страницы"
+\begin{figure}[t]
+\centering
+\includegraphics{fig1.jpg}
+\caption{Разрыв функции}
+\label{разрыв_функции}
+\end{figure}
+
+\begin{figure}[h]
+	\includegraphics{thesis-search-trends}
+	\caption{Статистика поисковых запросов в течении года}
+\end{figure}
+
+% У заключения нет номера главы
+\section*{Заключение}
+Огибающая семейства поверхностей позитивно масштабирует невероятный полином, в итоге
+приходим к логическому противоречию. Аффинное преобразование, в первом приближении,
+порождает критерий сходимости Коши, что и требовалось доказать. Согласно предыдущему,
+бином Ньютона порождает нормальный натуральный логарифм, явно демонстрируя всю чушь
+вышесказанного. Замкнутое множество позиционирует предел последовательности, что
+несомненно приведет нас к истине \cite{saturday_is_monday}
+
+\bibliographystyle{ugost2008ls}
+\bibliography{diploma.bib}
+
+\end{document}
