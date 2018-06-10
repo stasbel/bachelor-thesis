@@ -42,6 +42,9 @@
 \LoadClass[a4paper,\my@fontsize]{\my@baseclass}
 
 \usepackage{fontspec}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
 \setmainfont[Mapping=tex-text]{CMU Serif}
 \setsansfont{CMU Sans Serif}               
 \setmonofont{CMU Typewriter Text}
@@ -49,6 +52,9 @@
 % Поля настраиваются командами \newgeometry во время и после генерации титульных 
 % страниц и 
 \usepackage[a4paper]{geometry}
+
+\usepackage{titlesec}
+\newcommand{\sectionbreak}{\clearpage}
 
 \usepackage{fancyhdr}
 \usepackage{ifthen}
@@ -307,6 +313,19 @@
 
 %% Переименование "содержания" в "оглавление"
 \gappto\captionsrussian{\renewcommand{\contentsname}{Оглавление}}
+
+\setcounter{secnumdepth}{4}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+%% Правильный параграф
+\makeatletter
+\renewcommand\paragraph{%
+    \@startsection{paragraph}{4}{0mm}%
+       {-\baselineskip}%
+       {.5\baselineskip}%
+       {\normalfont\normalsize\bfseries}}
+\makeatother
 
 \let\savenumberline\numberline
 \def\numberline#1{\savenumberline{#1.}}

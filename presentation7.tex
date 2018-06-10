@@ -58,7 +58,7 @@
 %-------------------------------------------------------------------------------
 %	TITLE PAGE
 %-------------------------------------------------------------------------------
-\title[Управляемая генерация текста]{Управляемая генерация текста%Controllable text generation with small data using auxiliary in-domain enrichment
+\title[Управляемая генерация текста]{Управляемая генерация текста c использованием механизма внимания%Controllable text generation with small data using auxiliary in-domain enrichment
 }
 \author[Беляев Станислав]{
 Беляев Станислав\texorpdfstring{\\ Научный руководитель: Николенко Сергей Игоревич}{}
@@ -169,8 +169,9 @@
         \end{itemize}
         Датасеты:
         \begin{itemize}
-            \item \textbf{IMDB}, \textbf{SST}, \textbf{Lexicon}, \textbf{20NEWS}
-            \item Условия задачек $|X_{\texttt{task}}| = 750k$ с частичной разметкой (собранные вручную)
+            \item \textbf{IMDB}, \textbf{SST}, Lexicon, 20NEWS
+            \item Условия задачек $|X_{\texttt{task}}| = 750k$ с частичной разметкой
+            \item SMILES представления молекул
         \end{itemize}
     \end{column}
     \begin{column}{0.5\textwidth}
@@ -196,7 +197,7 @@
         $PP(W) = P(w_1w_2w_3\dots w_{|W|})^{-\frac{1}{|W|}} = \left[\prod\limits_{i=1}^{|W|}{\frac{1}{P(w_i|w_1\dots w_{i-1})}}\right]^{\frac{1}{|W|}}$
     \end{block}
     \begin{block}{BLEU, Self-BLEU}
-        BLEU(w_1, w_2) \in [0, 1], ~ \texttt{N-gram'ая схожесть предложений}
+        BLEU(R, S) \in [0, 1], ~ \texttt{N-gram'ая схожесть предложений}
     \end{block}
     \item Assessors evaluation
         \begin{itemize}
@@ -435,15 +436,46 @@
 %-------------------------------------------------------------------------------
 \begin{frame}
 \frametitle{VAE}
-\framesubtitle{AAE (Makhzani et al., 2016)}
+\framesubtitle{Лучшие подходы}
 
-\includegraphics[width=\textwidth]{images/aae.png}
+\begin{itemize}
+    \item GRU => SRU
+    \item 6 слоев, все дропауты по 0.3
+    \begin{itemize}
+        \item WordDropout
+        \item LayerDropout
+        \item RNNDropout
+    \end{itemize}
+    \item Быстрое сэмплирование с векторными операциями на GPU
+    \begin{itemize}
+        \item \~2x скорость обучения
+    \end{itemize}
+    \item Стохастический beam search с регулируемой температурой softmax-активации
+    \begin{itemize}
+        \item \~4x скорость сэмплирования
+    \end{itemize}
+    \item CNNEncoder (Zhang et al. 2016)
+    \begin{itemize}
+        \item 2, 3, 4, 5-граммы
+        \item SELU-активация
+    \end{itemize}
+\end{itemize}
 
 \end{frame}
 %-------------------------------------------------------------------------------
 \begin{frame}
 \frametitle{VAE}
-\framesubtitle{Attention}
+\framesubtitle{Self-Attention}
+
+\begin{center}
+    \includegraphics[width=0.57\textwidth]{images/self_attention.png}
+\end{center}
+
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}
+\frametitle{VAE}
+\framesubtitle{Attention penalty}
 
 \begin{center}
     \includegraphics[width=0.8\textwidth]{images/bad_sample.png}
@@ -478,43 +510,57 @@
 \framesubtitle{Сравнение моделей и подходов}
 
 \begin{table}
-\begin{tabular}{l | l l l l l l}
+\begin{tabular}{c | c c}
 \toprule
-\textbf{Test} & \textbf{RNN} & \textbf{VAE} & \textbf{CVAE} & \textbf{AAE} & \textbf{CAAE} & \textbf{GAN} \\
+\textbf{Test} & \textbf{CVAE} & \textbf{CVAE + SA} \\
 \midrule
-PTB & \NaN & \NaN & \NaN & \NaN & \NaN & \NaN \\
-CMC & \NaN & \NaN & \NaN & \NaN & \NaN & \NaN \\
-\midrule
-$X_{\texttt{test}}$ & \NaN & \NaN & \NaN & \NaN & \NaN & \NaN \\
+$X_{\texttt{gen}}$ & 83.483 & 84.263 \\
 \bottomrule
 \end{tabular}
+\vskip-2mm
+\caption{Точность на классификаторе}
+\end{table}
+
+\vskip-6mm
+
+\begin{table}
+\begin{tabular}{c | c c c c}
+\toprule
+\textbf{Test} & \textbf{VAE} & \textbf{CVAE} & \textbf{CVAE + SA} & \textbf{CVAE + SA + BS3 + CP} \\
+\midrule
+$X_{\texttt{test}}$ & \NaN & \NaN & 104 & 83 \\
+\bottomrule
+\end{tabular}
+\vskip-2mm
 \caption{Perplexity}
 \end{table}
 
-\vskip-3mm
+\vskip-6mm
 
 \begin{table}
-\begin{tabular}{l | l l l l l l}
+\begin{tabular}{c | c c c c}
 \toprule
-\textbf{Test} & \textbf{RNN} & \textbf{VAE} & \textbf{CVAE} & \textbf{AAE} & \textbf{CAAE} & \textbf{GAN} \\
+\textbf{Test} & \textbf{VAE} & \textbf{CVAE} & \textbf{CVAE + SA} & \textbf{CVAE + SA + BS3 + CP} \\
 \midrule
-$X_{\texttt{gen}}$ & \NaN & 0.18 & 0.19 & \NaN & \NaN & \NaN \\
+$X_{\texttt{gen}}$ & 9.0 & 9.0 & 14.3 & 15.4 \\
 \bottomrule
 \end{tabular}
-\caption{BLEU}
+\vskip-2mm
+\caption{BLEU * 100}
 \end{table}
 
-\vskip-3mm
+\vskip-6mm
 
 \begin{table}
-\begin{tabular}{l | l l l l l l}
+\begin{tabular}{c | c c c c}
 \toprule
-\textbf{Test} & \textbf{RNN} & \textbf{VAE} & \textbf{CVAE} & \textbf{AAE} & \textbf{CAAE} & \textbf{GAN} \\
+\textbf{Test} & \textbf{VAE} & \textbf{CVAE} & \textbf{CVAE + SA} & \textbf{CVAE + SA + BS3 + CP} \\
 \midrule
-$X_{\texttt{gen}}$ & \NaN & \NaN & \NaN & \NaN & \NaN & \NaN \\
+$X_{\texttt{gen}}$ & 3.8 & 4.0 & 4.2 & 4.2 \\
 \bottomrule
 \end{tabular}
-\caption{Self-BLEU}
+\vskip-2mm
+\caption{Self-BLEU * 100}
 \end{table}
 
 \end{frame}
@@ -525,9 +571,9 @@ $X_{\texttt{gen}}$ & \NaN & \NaN & \NaN & \NaN & \NaN & \NaN \\
 
 Выводы:
 \begin{itemize}
-    \item CAAE + Semi-supervised + декодэр на стероидах
+    \item CVAE + Semi-supervised + декодэр на стероидах
     \item Анализ state-of-the-art методов генерации текста
-    \item Анализ влияния данных на генерацию и способности выучить свойства
+    \item Анализ влияния данных на генерацию и способность выучить свойства
     \item Метрики и эмпирические проверки, позволяющие оценить сложность задачи
 \end{itemize}
 
@@ -535,15 +581,11 @@ $X_{\texttt{gen}}$ & \NaN & \NaN & \NaN & \NaN & \NaN & \NaN \\
 \begin{itemize}
     \item Попытаться проинтерпретировать важной свойств
     \begin{itemize}
-        \item Seed для $RNN$
         \item Латентное подпространство для $\Xtest \cap X$ из $VAE$
-    \end{itemize}
-    \item Оптимизация скорости для тестирования:
-    \begin{itemize}
-        \item RNN $\Rightarrow$ CNN
     \end{itemize}
     \item Акаковать проблему mode-collapsing'а в GAN'ах
     \begin{itemize}
+        \item VAE => AAE
         \item $\alpha$-GAN
     \end{itemize}
 \end{itemize}
