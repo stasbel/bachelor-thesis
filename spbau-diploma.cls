@@ -44,6 +44,7 @@
 \usepackage{fontspec}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{float}
 \usepackage{booktabs}
 \setmainfont[Mapping=tex-text]{CMU Serif}
 \setsansfont{CMU Sans Serif}               
