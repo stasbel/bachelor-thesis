@@ -22,6 +22,8 @@
 
 }
 
+\setbeamertemplate{caption}[numbered]
+
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{fontspec}
@@ -173,7 +175,7 @@
 Описание:
 \begin{itemize}
     \item Разметка - бинарное категориальное свойство эмоциональной окраски
-    \item Ограничение на длину предложения - $30$ слов ($2x$)
+    \item Ограничение на длину примера - $30$ слов ($2x$)
     \item $30000$ сэмплов для обучения, по $3000$ для валидации и тестирования
     \item BPE encoding для токенизации, позволяет абстрагироваться от языка.
     \item Ограничение на размер словаря - $15000$
@@ -484,14 +486,14 @@ BLEU & 18.0 & 15.9 & 15.6 & \textbf{23.0} & 20.7 & 8.1 \\
 Self-BLEU & 48.9 & 43.7 & 61.8 & 78.0 & 74.6 & \textbf{10.6} \\
 \bottomrule
 \end{tabular}
-\caption{BLEU5 * $100$ для $500$ сгенерированных сэмплов}
+\caption{BLEU5 * $100$ для $500$ сгенерированных сэмплов}\label{table:a}
 \end{table}
 
 \vskip-3mm
 
 \begin{itemize}
     \item $D_{ACC}$ - точность классификации после генерации
-    \item $CVAE_{++}$ - улучшенная реализация CVAE
+    \item $CVAE_{++}$ - улучшенная реализация CVAE для длинных примеров
     \item SA - Self-Attention, CP - штраф на матрице внимания
 \end{itemize}
 
@@ -503,10 +505,10 @@ Metrics & VAE & CVAE & $CVAE_{++}$ + SA & \textbf{$\boldsymbol{CVAE_{++}}$ + SA 
 $D_{ACC}$ & - & 83.483 & \textbf{84.263} & \textbf{84.263} \\
 Perplexity & 150 & 104 & 84 & \textbf{83} \\
 BLEU & 8.5 & 9.3 & 18.2 & \textbf{20.5} \\
-Self-BLEU & 9.0 & 8.7 & 45.8 & \textbf{44.2} \\
+Self-BLEU & 9.0 & \textbf{8.7} & 45.8 & 44.2 \\
 \bottomrule
 \end{tabular}
-\caption{Метрики для расширений $VAE$}
+\caption{Метрики для расширений $VAE$}\label{table:b}
 \end{table}
 
 \end{frame}
